@@ -71,14 +71,14 @@ apt-get install docker-ce -y
 #mkdir /sys/fs/cgroup/systemd
 usermod -aG docker u
 tar xvzf chromium.tar.gz
-echo '
+echo "
 FROM ubuntu:14.04
 
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/mypod && \
-    echo "mypod:x:${uid}:${gid}:mypod,,,:/home/mypod:/bin/bash" >> /etc/passwd && \
-    echo "mypod:x:${uid}:" >> /etc/group && \
-    echo "mypod ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/mypod && \
+    echo \"mypod:x:${uid}:${gid}:mypod,,,:/home/mypod:/bin/bash\" >> /etc/passwd && \
+    echo \"mypod:x:${uid}:\" >> /etc/group && \
+    echo \"mypod ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/mypod && \
     chmod 0440 /etc/sudoers.d/mypod && \
     chown ${uid}:${gid} -R /home/mypod
 
@@ -91,7 +91,7 @@ USER mypod
 COPY --chown=1000:1000 chromium /home/mypod/.config/chromium
 ENV HOME /home/mypod
 CMD chromium-browser --noerrdialogs --incognito --disable-pinch --app=$Homepage --window-size=1920,1020
-' > dockerfile
+" > dockerfile
 docker build -t chromium-browser .
 read -sn 1 -p "Finish ! Press any key to reboot"
 echo -e "\n"
