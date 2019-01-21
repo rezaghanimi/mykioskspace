@@ -2,7 +2,7 @@
 
 HomePage="$1"
 
-if ! [ "$Homepage" ]; then
+if [[ "$HomePage" == "" ]]; then
 	echo -n "
 Build Kiosk Chromium Workspace.
 
