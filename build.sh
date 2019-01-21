@@ -14,6 +14,11 @@ $(basename $0) [Homepage]
     exit 1
 fi
 
+if [ "$(whoami)" != 'root' ]; then
+    echo $"You have no permission to run $0 as non-root user. Use sudo"
+    exit 1;
+fi
+
 apt update && apt upgrade -y
 apt install -y mc htop nano
 apt install --no-install-recommends xorg openbox pulseaudio git tar unzip -y
@@ -74,22 +79,21 @@ tar xvzf chromium.tar.gz
 echo "
 FROM ubuntu:14.04
 
-RUN export uid=1000 gid=1000 && \
-    mkdir -p /home/mypod && \
-    echo \"mypod:x:${uid}:${gid}:mypod,,,:/home/mypod:/bin/bash\" >> /etc/passwd && \
-    echo \"mypod:x:${uid}:\" >> /etc/group && \
-    echo \"mypod ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/mypod && \
-    chmod 0440 /etc/sudoers.d/mypod && \
-    chown ${uid}:${gid} -R /home/mypod
+RUN mkdir -p /home/kiosk && \
+    echo \"kiosk:x:1000:1000:kiosk,,,:/home/kiosk:/bin/bash\" >> /etc/passwd && \
+    echo \"kiosk:x:1000:\" >> /etc/group && \
+    echo \"kiosk ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/kiosk && \
+    chmod 0440 /etc/sudoers.d/kiosk && \
+    chown 1000:1000 -R /home/kiosk
 
 RUN apt-get update
 RUN apt-get install chromium-browser dbus-x11 packagekit-gtk3-module libcanberra-gtk-module -y
-RUN chown -R mypod:mypod /home/mypod
+RUN chown -R kiosk:kiosk /home/kiosk
 RUN mkdir /var/run/dbus/
-RUN mkdir /home/mypod/.config/
-USER mypod
-COPY --chown=1000:1000 chromium /home/mypod/.config/chromium
-ENV HOME /home/mypod
+RUN mkdir /home/kiosk/.config/
+USER kiosk
+COPY --chown=1000:1000 chromium /home/kiosk/.config/chromium
+ENV HOME /home/kiosk
 CMD chromium-browser --noerrdialogs --incognito --disable-pinch --app=$HomePage --window-size=1920,1020
 " > dockerfile
 docker build -t chromium-browser .
