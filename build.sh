@@ -57,8 +57,8 @@ sed -i 's!#GRUB_HIDDEN_TIMEOUT=0!GRUB_HIDDEN_TIMEOUT=0!' /etc/default/grub
 sed -i 's!GRUB_TIMEOUT=2!GRUB_TIMEOUT=0!' /etc/default/grub
 sed -i 's!GRUB_CMDLINE_LINUX_DEFAULT=""!GRUB_CMDLINE_LINUX_DEFAULT="quiet splash cgroup_enable=memory,namespace"!' /etc/default/grub
 update-grub
-sed -i 's!title=Ubuntu 16.04!title=<<< MyPOD >>>!' /usr/share/plymouth/themes/text.plymouth
-sed -i 's!title=Ubuntu 16.04!title=<<< MyPOD >>>!' /usr/share/plymouth/themes/ubuntu-text/ubuntu-text.plymouth
+sed -i 's!title=Ubuntu 16.04!title=<<< Welcome >>>!' /usr/share/plymouth/themes/text.plymouth
+sed -i 's!title=Ubuntu 16.04!title=<<< Welcome >>>!' /usr/share/plymouth/themes/ubuntu-text/ubuntu-text.plymouth
 update-initramfs -u
 
 apt install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
@@ -90,7 +90,7 @@ RUN mkdir /home/mypod/.config/
 USER mypod
 COPY --chown=1000:1000 chromium /home/mypod/.config/chromium
 ENV HOME /home/mypod
-CMD chromium-browser --noerrdialogs --incognito --disable-pinch --app=$Homepage --window-size=1920,1020
+CMD chromium-browser --noerrdialogs --incognito --disable-pinch --app=$HomePage --window-size=1920,1020
 " > dockerfile
 docker build -t chromium-browser .
 read -sn 1 -p "Finish ! Press any key to reboot"
