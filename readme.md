@@ -9,7 +9,9 @@
 
 ### Установка 
 > git clone https://github.com/laspavel/mykioskspace
+
 > cd mykioskspace
+
 > ./build.sh https://mystartpage.com
 
 В коде https://mystartpage.com - стартовая страница запуска киоска.
