@@ -5,7 +5,10 @@
 - شروع خودکار هنگام راه اندازی سیستم
 - امنیت سیستم - کاربر در مرورگر فقط محیط داخل کانتینر را می بیند و نه سیستمی را که از آن راه اندازی شده است.
 ### نصب و راه اندازی
-> git clone https://github.com/laspavel/mykioskspace
+> git clone https://github.com/rezaghanimi/mykioskspace
+
 > cd mykioskspace
+
 > ./build.sh https://mystartpage.com
+
 در کد، https://mystartpage.com صفحه شروع راه اندازی کیوسک است.
